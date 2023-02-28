@@ -21,7 +21,7 @@ public class Shotter {
     private float angulo;
     private float incremento=180f/128f;
     private boolean debug;
-    private static final int WIDTH=62, HEIGHT=40;
+    private static final int WIDTH=64, HEIGHT=64;
     private static final float MIN_ANGLE=0f, MAX_ANGLE=180f; 
     
     public Shotter(Point2D posicion) {
@@ -46,20 +46,39 @@ public class Shotter {
         this.siguiente= new Bubble();
         return tempo;
     }
+    public Point2D getArrowPoint2D(){
+        float anguloinver=90-this.angulo;
+        float relativo=anguloinver/90.0f;
+        int fotograma=(int)(relativo*64);
+        int c=fotograma%16;
+        int f=fotograma/16;
+        return new Point2D(c,f);
+    }
+    
     public void paint(GraphicsContext gc) {
         Resources r = Resources.getInstance();
-        gc.drawImage(r.getImage("spriters"),
+      /*  gc.drawImage(r.getImage("spriters"),
     //inicio de la posicion
-        3,
-        1804,
-        WIDTH,
-        HEIGHT,
-        //dibujar en el lienzo
-        (this.posicion.getX() - WIDTH / 2) * Game.SCALE,
-        (this.posicion.getY() - HEIGHT / 2) * Game.SCALE,
-        WIDTH * Game.SCALE,
-        HEIGHT * Game.SCALE);
-       
+            3,
+            1804,
+            WIDTH,
+            HEIGHT,
+            //dibujar en el lienzo
+            (this.posicion.getX() - WIDTH / 2) * Game.SCALE,
+            (this.posicion.getY() - HEIGHT / 2) * Game.SCALE,
+            WIDTH * Game.SCALE,
+            HEIGHT * Game.SCALE);*/
+        
+        Point2D p=getArrowPoint2D();
+        gc.drawImage(r.getImage("spriters"),
+            1+(p.getX()*65),
+            1545+(p.getY()*65),
+            64,
+            64,
+            (this.posicion.getX() - WIDTH/2) * Game.SCALE,
+            (this.posicion.getY() - HEIGHT/2) * Game.SCALE,
+            64* Game.SCALE,
+            64*Game.SCALE);
         //si se esta depurando
         if (this.isDebug()) {
             gc.setStroke(Color.RED);
@@ -72,8 +91,8 @@ public class Shotter {
                     
 //                    this.getPosicion().getY(), (this.getPosicion().getX() - WIDTH / 2) *Game.SCALE, 
 //                    (this.getPosicion().getY() - HEIGHT / 2) * Game.SCALE);
-        }
-    }
+        }  
+    }    
     public void Moveleft(){
         this.angulo+=this.incremento;
         if(this.angulo>MAX_ANGLE){
@@ -86,7 +105,7 @@ public class Shotter {
             this.angulo=MIN_ANGLE;
         }
     }
-
+    
     /**
      * @return the posicion
      */
