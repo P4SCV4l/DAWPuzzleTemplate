@@ -16,48 +16,67 @@ import static pedro.ieslaencanta.com.dawpuzzletemplate.Bubble.WIDTH;
  * @author DAWTarde
  */
 public class Shotter {
+
     private Point2D posicion;
-    private Bubble actual, siguiente;    
+    private Bubble actual, siguiente;
     private float angulo;
-    private float incremento=180f/128f;
+    private float incremento = 180f / 128f;
     private boolean debug;
-    private static final int WIDTH=64, HEIGHT=64;
-    private static final float MIN_ANGLE=0f, MAX_ANGLE=180f; 
-    
+    private static final int WIDTH = 64, HEIGHT = 64;
+    private static final float MIN_ANGLE = 0f, MAX_ANGLE = 180f;
+
     public Shotter(Point2D posicion) {
         this.posicion = posicion;
-        this.actual= CreateBubble();
-        this.siguiente= CreateBubble();
-        this.angulo=90.0f;
+        this.actual = CreateBubble();
+        this.siguiente = CreateBubble();
+        this.angulo = 90.0f;
     }
+
     public Shotter(float x, float y) {
         this.posicion = new Point2D(x, y);
     }
+
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
-    public Bubble CreateBubble(){
+
+    public Bubble CreateBubble() {
         return new Bubble();
     }
-    public Bubble shoot(){
-        Bubble tempo=this.actual;
+
+    public Bubble shoot() {
+        Bubble tempo = this.actual;
         tempo.setAngulo(angulo);
-        this.actual=this.siguiente;
-        this.siguiente= new Bubble();
+        this.actual = this.siguiente;
+        this.siguiente = new Bubble();
         return tempo;
     }
-    public Point2D getArrowPoint2D(){
-        float anguloinver=90-this.angulo;
-        float relativo=anguloinver/90.0f;
-        int fotograma=(int)(relativo*64);
-        int c=fotograma%16;
-        int f=fotograma/16;
-        return new Point2D(c,f);
+
+    public Point2D getArrowPoint2D() {
+        int c;
+        int f;
+        int fotograma;
+        if (this.angulo <= 90) {
+            float anguloinver = 90 - this.angulo;
+            float relativo = anguloinver / 90.0f;
+            fotograma = (int) (relativo * 64);
+            c = fotograma % 16;
+            f = fotograma / 16;
+            if(this.angulo==0){
+                c=15;
+                f=3;
+            }
+        } else {
+            fotograma = (int) ((180 - this.angulo) / this.incremento);
+            c = 15 - fotograma % 16;
+            f = 3 - fotograma / 16;
+        }
+        return new Point2D(c, f);
     }
-    
+
     public void paint(GraphicsContext gc) {
         Resources r = Resources.getInstance();
-      /*  gc.drawImage(r.getImage("spriters"),
+        /*  gc.drawImage(r.getImage("spriters"),
     //inicio de la posicion
             3,
             1804,
@@ -68,44 +87,60 @@ public class Shotter {
             (this.posicion.getY() - HEIGHT / 2) * Game.SCALE,
             WIDTH * Game.SCALE,
             HEIGHT * Game.SCALE);*/
-        
-        Point2D p=getArrowPoint2D();
-        gc.drawImage(r.getImage("spriters"),
-            1+(p.getX()*65),
-            1545+(p.getY()*65),
-            64,
-            64,
-            (this.posicion.getX() - WIDTH/2) * Game.SCALE,
-            (this.posicion.getY() - HEIGHT/2) * Game.SCALE,
-            64* Game.SCALE,
-            64*Game.SCALE);
+
+        Point2D p = getArrowPoint2D();
+        if (this.angulo <= 90) {
+            gc.drawImage(r.getImage("spriters"),
+                    1 + (p.getX() * 65),
+                    1545 + (p.getY() * 65),
+                    WIDTH,
+                    HEIGHT,
+                    (this.posicion.getX() - WIDTH / 2) * Game.SCALE,
+                    (this.posicion.getY() - HEIGHT / 2) * Game.SCALE,
+                    WIDTH * Game.SCALE,
+                    HEIGHT * Game.SCALE);
+        }
+
+        if (this.angulo > 90) {
+            gc.drawImage(r.getImage("spriters"),
+                    1 + (p.getX() * 65),
+                    1545 + (p.getY() * 65),
+                    WIDTH,
+                    HEIGHT,
+                    (this.posicion.getX() - WIDTH / 2+ WIDTH ) * Game.SCALE,
+                    (this.posicion.getY() - HEIGHT / 2) * Game.SCALE,
+                  - WIDTH * Game.SCALE,
+                    HEIGHT * Game.SCALE);
+        }
         //si se esta depurando
         if (this.isDebug()) {
             gc.setStroke(Color.RED);
             gc.fillOval(this.getPosicion().getX() * Game.SCALE - 5,
-            (this.getPosicion().getY()) * Game.SCALE - 5, 10, 10);
+                    (this.getPosicion().getY()) * Game.SCALE - 5, 10, 10);
             gc.setStroke(Color.GREEN);
             gc.strokeText(this.angulo + "º ",
-                    this.posicion.getX()* Game.SCALE,
-                    this.posicion.getY()* Game.SCALE);
-                    
+                    this.posicion.getX() * Game.SCALE,
+                    this.posicion.getY() * Game.SCALE);
+
 //                    this.getPosicion().getY(), (this.getPosicion().getX() - WIDTH / 2) *Game.SCALE, 
 //                    (this.getPosicion().getY() - HEIGHT / 2) * Game.SCALE);
-        }  
-    }    
-    public void Moveleft(){
-        this.angulo+=this.incremento;
-        if(this.angulo>MAX_ANGLE){
-            this.angulo=MAX_ANGLE;
         }
     }
-    public void Moverigth(){
-        this.angulo-=this.incremento;
-        if(this.angulo<MIN_ANGLE){
-            this.angulo=MIN_ANGLE;
+
+    public void Moveleft() {
+        this.angulo += this.incremento;
+        if (this.angulo > MAX_ANGLE) {
+            this.angulo = MAX_ANGLE;
         }
     }
-    
+
+    public void Moverigth() {
+        this.angulo -= this.incremento;
+        if (this.angulo < MIN_ANGLE) {
+            this.angulo = MIN_ANGLE;
+        }
+    }
+
     /**
      * @return the posicion
      */

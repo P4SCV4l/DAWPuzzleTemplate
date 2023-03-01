@@ -194,7 +194,8 @@ public class Board implements IKeyListener {
     }
 
     @Override
-    public void onKeyReleased(KeyCode code) {
+    public void
+         onKeyReleased(KeyCode code) {
         switch (code) {
             case LEFT:
                 this.left_press = false;
