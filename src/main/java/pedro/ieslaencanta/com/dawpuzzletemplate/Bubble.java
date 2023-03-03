@@ -20,6 +20,7 @@ public class Bubble {
     }
     private boolean debug = false;
     private State estado;
+    public static final int DIAMETRO=16;
     private Point2D posicion;
     private float angulo = 0;
     private float velocidad = 1f;
@@ -80,7 +81,7 @@ public class Bubble {
             else if (this.getPosicion().getY() - (Bubble.HEIGHT / 2) <=
             b.getMinY()) {
                 pared = true;
-                this.changeDirectionVertical();
+                //this.changeDirectionVertical();
                 }
             }
         }

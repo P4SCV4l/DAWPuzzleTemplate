@@ -28,7 +28,7 @@ public class Board implements IKeyListener {
     private GraphicsContext gc;
     private GraphicsContext bggc;
     private Dimension2D original_size;
-
+    private BubbleGrid grid;
     private boolean debug;
     private boolean left_press, right_press;
     private Bubble ball;
@@ -40,6 +40,7 @@ public class Board implements IKeyListener {
      * @param original
      */
     public Board(Dimension2D original) {
+        
         this.gc = null;
         this.game_zone = new Rectangle2D(95, 23, 128, 200);
         this.original_size = original;
@@ -49,6 +50,7 @@ public class Board implements IKeyListener {
                 (this.game_zone.getMaxX() - this.game_zone.getWidth() / 2),
                 (this.game_zone.getMaxY() - 20)
         ));
+        this.grid= new BubbleGrid((int)this.game_zone.getMinX(),(int)this.game_zone.getMinY());
         this.setDebug(true);
 
     }
@@ -123,6 +125,10 @@ public class Board implements IKeyListener {
         if (this.ball != null && this.ball.getBalltype() != null) {
             this.ball.move(this.game_zone);
         }
+        if(this.ball !=null && this.grid!=null){
+            if(this.grid.collision(ball))
+                this.ball=null;
+        }
        
     }
 
@@ -133,6 +139,8 @@ public class Board implements IKeyListener {
         if (this.shotter != null) {
             this.shotter.paint(gc);
         }
+        if(this.grid!=null)
+            this.grid.paint(gc);
     }
 
     private void process_input() {
@@ -160,7 +168,7 @@ public class Board implements IKeyListener {
         Image imagen = Resources.getInstance().getImage("fondos");
         this.bggc.drawImage(imagen,
                 //Se optiene del original
-                344, 17,
+                16, 16,
                 this.original_size.getWidth(),
                 this.original_size.getHeight(),
                 0, 0,
