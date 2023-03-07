@@ -48,26 +48,26 @@ public class BubbleGrid {
 
     public boolean collision(Bubble b) {
         boolean colission = false;
+        //boolean par = false;
 
         if (b.getPosicion().getY() - Bubble.HEIGHT / 2 <= this.starty) {
             colission = true;
+            //par = true;
         } else {
             for (int i = 0; i < this.bubblegrid.length && !colission; i++) {
                 for (int j = 0; j < this.bubblegrid[i].length && !colission; j++) {
-
                     if (this.bubblegrid[i][j] != null) {
                         double distancia = this.bubblegrid[i][j].getPosicion().distance(b.getPosicion());
-                        if (distancia <= 16) {
-                            System.out.println(distancia);
-
+                        if (distancia <= 16 ) {
+                            //System.out.println(distancia);
+                            //par=true;
                             colission = true;
                         }
                     }
                 }
             }
         }
-
-        if (colission) {
+        if (colission /*&& par*/) {
             int f, c;
             //for(int i=0;i<this.bubblegrid.length && colission==true;i++){
             //    for(int j=0;j<this.bubblegrid[i].length;j++){
@@ -75,13 +75,32 @@ public class BubbleGrid {
             f = (int) ((b.getPosicion().getY() - this.starty) / Bubble.HEIGHT);
             c = (int) ((b.getPosicion().getX() - this.startx) / Bubble.WIDTH);
             this.bubblegrid[f][c] = b;
+            if (f%2==0){
             b.setPosicion(new Point2D(
                     this.startx + c * Bubble.WIDTH + Bubble.WIDTH / 2,
                     this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
             );
-            //    }
-            //}
-        }
+            }else{
+                 b.setPosicion(new Point2D(
+                    this.startx + c * Bubble.WIDTH + Bubble.WIDTH,
+                    this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT /2)
+                );
+            }
+                //}
+            }
+        /*}else{
+            if (colission && !par){
+                int f, c;
+                b.stop();
+                f = (int) ((b.getPosicion().getY() - this.starty) / Bubble.HEIGHT);
+                c = (int) ((b.getPosicion().getX() - this.startx) / Bubble.WIDTH);
+                this.bubblegrid[f][c] = b;
+                b.setPosicion(new Point2D(
+                        this.startx + c * Bubble.WIDTH + Bubble.WIDTH,
+                        this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
+                );
+            }
+        }*/
         return colission;
     }
 

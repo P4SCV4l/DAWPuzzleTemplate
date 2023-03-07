@@ -76,17 +76,17 @@ public class Shotter {
 
     public void paint(GraphicsContext gc) {
         Resources r = Resources.getInstance();
-        /*  gc.drawImage(r.getImage("spriters"),
+          gc.drawImage(r.getImage("spriters"),
     //inicio de la posicion
-            3,
-            1804,
+            1,
+            1805,
             WIDTH,
-            HEIGHT,
+            40,
             //dibujar en el lienzo
             (this.posicion.getX() - WIDTH / 2) * Game.SCALE,
-            (this.posicion.getY() - HEIGHT / 2) * Game.SCALE,
+            (this.posicion.getY() - 40 / 2) * Game.SCALE,
             WIDTH * Game.SCALE,
-            HEIGHT * Game.SCALE);*/
+            40 * Game.SCALE);
 
         Point2D p = getArrowPoint2D();
         if (this.angulo <= 90) {
