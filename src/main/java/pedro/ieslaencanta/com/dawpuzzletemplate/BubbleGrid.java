@@ -54,11 +54,11 @@ public class BubbleGrid {
             colission = true;
             //par = true;
         } else {
-            for (int i = 0; i < this.bubblegrid.length && !colission; i++) {
-                for (int j = 0; j < this.bubblegrid[i].length && !colission; j++) {
+            for (int i = bubblegrid.length-1; i >= 0 && !colission; i--) {
+                for (int j = this.bubblegrid[i].length-1; j >=0  && !colission; j--) {
                     if (this.bubblegrid[i][j] != null) {
                         double distancia = this.bubblegrid[i][j].getPosicion().distance(b.getPosicion());
-                        if (distancia <= 16 ) {
+                        if (distancia <= 16) {
                             //System.out.println(distancia);
                             //par=true;
                             colission = true;
@@ -73,21 +73,26 @@ public class BubbleGrid {
             //    for(int j=0;j<this.bubblegrid[i].length;j++){
             b.stop();
             f = (int) ((b.getPosicion().getY() - this.starty) / Bubble.HEIGHT);
-            c = (int) ((b.getPosicion().getX() - this.startx) / Bubble.WIDTH);
-            this.bubblegrid[f][c] = b;
-            if (f%2==0){
-            b.setPosicion(new Point2D(
-                    this.startx + c * Bubble.WIDTH + Bubble.WIDTH / 2,
-                    this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
-            );
-            }else{
-                 b.setPosicion(new Point2D(
-                    this.startx + c * Bubble.WIDTH + Bubble.WIDTH,
-                    this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT /2)
+            //Revisar f porque se sale del límite del tamaño del grid.
+            if (f % 2 == 0) {
+
+                c = (int) ((b.getPosicion().getX() - this.startx) / Bubble.WIDTH);
+
+                b.setPosicion(new Point2D(
+                        this.startx + c * Bubble.WIDTH + Bubble.WIDTH / 2,
+                        this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
+                );
+            } else {
+                c = (int) ((b.getPosicion().getX() - this.startx - Bubble.WIDTH / 2) / Bubble.WIDTH);
+                this.bubblegrid[f][c] = b;
+                b.setPosicion(new Point2D(
+                        this.startx + (c * Bubble.WIDTH) + Bubble.WIDTH,
+                        this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
                 );
             }
-                //}
-            }
+            this.bubblegrid[f][c] = b;
+            //}
+        }
         /*}else{
             if (colission && !par){
                 int f, c;
