@@ -50,6 +50,7 @@ public class Shotter {
         this.actual = this.siguiente;
         this.siguiente = new Bubble();
         return tempo;
+        
     }
 
     public Point2D getArrowPoint2D() {

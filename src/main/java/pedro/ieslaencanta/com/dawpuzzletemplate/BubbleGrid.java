@@ -49,7 +49,7 @@ public class BubbleGrid {
     public boolean collision(Bubble b) {
         boolean colission = false;
         //boolean par = false;
-
+        int f = 0;
         if (b.getPosicion().getY() - Bubble.HEIGHT / 2 <= this.starty) {
             colission = true;
             //par = true;
@@ -68,10 +68,12 @@ public class BubbleGrid {
             }
         }
         if (colission /*&& par*/) {
-            int f, c;
+            int c;
             //for(int i=0;i<this.bubblegrid.length && colission==true;i++){
             //    for(int j=0;j<this.bubblegrid[i].length;j++){
             b.stop();
+            System.out.println(b.getPosicion().getY());
+            System.out.println(this.starty);
             f = (int) ((b.getPosicion().getY() - this.starty) / Bubble.HEIGHT);
             //Revisar f porque se sale del límite del tamaño del grid.
             if (f % 2 == 0) {
@@ -84,6 +86,7 @@ public class BubbleGrid {
                 );
             } else {
                 c = (int) ((b.getPosicion().getX() - this.startx - Bubble.WIDTH / 2) / Bubble.WIDTH);
+                System.out.println(f);
                 this.bubblegrid[f][c] = b;
                 b.setPosicion(new Point2D(
                         this.startx + (c * Bubble.WIDTH) + Bubble.WIDTH,

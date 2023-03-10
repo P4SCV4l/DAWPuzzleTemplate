@@ -40,7 +40,7 @@ public class Board implements IKeyListener {
      * @param original
      */
     public Board(Dimension2D original) {
-        
+
         this.gc = null;
         this.game_zone = new Rectangle2D(95, 23, 128, 200);
         this.original_size = original;
@@ -50,7 +50,7 @@ public class Board implements IKeyListener {
                 (this.game_zone.getMaxX() - this.game_zone.getWidth() / 2),
                 (this.game_zone.getMaxY() - 20)
         ));
-        this.grid= new BubbleGrid((int)this.game_zone.getMinX(),(int)this.game_zone.getMinY());
+        this.grid = new BubbleGrid((int) this.game_zone.getMinX(), (int) this.game_zone.getMinY());
         this.setDebug(true);
 
     }
@@ -125,11 +125,12 @@ public class Board implements IKeyListener {
         if (this.ball != null && this.ball.getBalltype() != null) {
             this.ball.move(this.game_zone);
         }
-        if(this.ball !=null && this.grid!=null){
-            if(this.grid.collision(ball))
-                this.ball=null;
+        if (this.ball != null && this.grid != null) {
+            if (this.grid.collision(ball)) {
+                this.ball = null;
+            }
         }
-       
+
     }
 
     private void render() {
@@ -139,8 +140,9 @@ public class Board implements IKeyListener {
         if (this.shotter != null) {
             this.shotter.paint(gc);
         }
-        if(this.grid!=null)
+        if (this.grid != null) {
             this.grid.paint(gc);
+        }
     }
 
     private void process_input() {
@@ -203,7 +205,7 @@ public class Board implements IKeyListener {
 
     @Override
     public void
-         onKeyReleased(KeyCode code) {
+            onKeyReleased(KeyCode code) {
         switch (code) {
             case LEFT:
                 this.left_press = false;
@@ -216,13 +218,15 @@ public class Board implements IKeyListener {
                 this.paintBackground();
                 break;
             case SPACE:
-                this.ball = shotter.shoot();
-                //se coloca el tipo de forma aleatorioa
-                this.ball.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
-                //se pone la posición (centro) y ángulo aleatorio
-                this.ball.setPosicion(new Point2D((this.game_zone.getMaxX() - this.game_zone.getWidth() / 2), (this.game_zone.getMaxY() - 18)));
-                //), (float) (Math.random()*360));
-                this.ball.play();
+                if (this.ball == null || !this.ball.isPlay()) {
+                    this.ball = shotter.shoot();
+                    //se coloca el tipo de forma aleatorioa
+                    this.ball.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
+                    //se pone la posición (centro) y ángulo aleatorio
+                    this.ball.setPosicion(new Point2D((this.game_zone.getMaxX() - this.game_zone.getWidth() / 2), (this.game_zone.getMaxY() - 18)));
+                    //), (float) (Math.random()*360));
+                    this.ball.play();
+                }
                 break;
             case P:
 
