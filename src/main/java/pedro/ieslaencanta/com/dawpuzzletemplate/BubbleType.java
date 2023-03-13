@@ -14,10 +14,10 @@ public enum BubbleType {
     RED(1, 33),
     YELLOW(171,0),
     GREEN(171, 33),
-    PURPLE(1, 67),
-    ORANGE(171, 67),
-    GRAY(1, 100),
-    WRITE(171, 100);
+    PURPLE(1, 66),
+    ORANGE(171, 66),
+    GRAY(1, 99),
+    WRITE(171, 99);
     private final int x;
     private final int y;
 

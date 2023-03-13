@@ -34,14 +34,16 @@ public class Bubble {
     public Bubble() {
         this.estado = State.STOP;
         this.posicion = Point2D.ZERO;
+        BubbleType[] balltypes = BubbleType.values();
+        this.setBalltype(balltypes[(int) (Math.random() * balltypes.length)]);
     }
     public void init(Point2D p, float angle) {
         int vertical_center = (int) (p.getX());
         int horizontal_center = (int) (p.getY());
         this.angulo = angle;
         this.posicion = new Point2D(vertical_center, horizontal_center);
-        BubbleType[] balltypes = BubbleType.values();
-        this.setBalltype(balltypes[(int) (Math.random() * balltypes.length)]);
+        // BubbleType[] balltypes = BubbleType.values();
+        // this.setBalltype(balltypes[(int) (Math.random() * balltypes.length)]);
         this.stop();
     }
     public boolean isPlay() {

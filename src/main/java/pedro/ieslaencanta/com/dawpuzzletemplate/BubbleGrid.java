@@ -32,9 +32,9 @@ public class BubbleGrid {
 
     }
 
-    public BubbleGrid(Bubble bubblegrid[][], int startx, int starty) {
-        bubblegrid = new Bubble[8][9];
-    }
+//    public BubbleGrid(Bubble bubblegrid[][], int startx, int starty) {
+//        bubblegrid = new Bubble[startx][starty];
+//    }
 
     public void paint(GraphicsContext gc) {
         for (int i = 0; i < this.bubblegrid.length; i++) {
@@ -49,7 +49,7 @@ public class BubbleGrid {
     public boolean collision(Bubble b) {
         boolean colission = false;
         //boolean par = false;
-        int f = 0;
+//        int f = 0;
         if (b.getPosicion().getY() - Bubble.HEIGHT / 2 <= this.starty) {
             colission = true;
             //par = true;
@@ -68,7 +68,7 @@ public class BubbleGrid {
             }
         }
         if (colission /*&& par*/) {
-            int c;
+            int f, c;
             //for(int i=0;i<this.bubblegrid.length && colission==true;i++){
             //    for(int j=0;j<this.bubblegrid[i].length;j++){
             b.stop();
@@ -76,18 +76,19 @@ public class BubbleGrid {
             System.out.println(this.starty);
             f = (int) ((b.getPosicion().getY() - this.starty) / Bubble.HEIGHT);
             //Revisar f porque se sale del límite del tamaño del grid.
+            if(f<0){
+                    f=(Math.abs(39 - this.starty) / Bubble.HEIGHT);
+                }
             if (f % 2 == 0) {
 
                 c = (int) ((b.getPosicion().getX() - this.startx) / Bubble.WIDTH);
-
+                
                 b.setPosicion(new Point2D(
                         this.startx + c * Bubble.WIDTH + Bubble.WIDTH / 2,
                         this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
                 );
             } else {
                 c = (int) ((b.getPosicion().getX() - this.startx - Bubble.WIDTH / 2) / Bubble.WIDTH);
-                System.out.println(f);
-                this.bubblegrid[f][c] = b;
                 b.setPosicion(new Point2D(
                         this.startx + (c * Bubble.WIDTH) + Bubble.WIDTH,
                         this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
@@ -111,5 +112,7 @@ public class BubbleGrid {
         }*/
         return colission;
     }
-
+    public void explosion (Bubble b){
+        
+    }
 }

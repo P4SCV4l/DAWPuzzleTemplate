@@ -50,9 +50,7 @@ public class Shotter {
         this.actual = this.siguiente;
         this.siguiente = new Bubble();
         return tempo;
-        
     }
-
     public Point2D getArrowPoint2D() {
         int c;
         int f;
@@ -78,7 +76,7 @@ public class Shotter {
     public void paint(GraphicsContext gc) {
         Resources r = Resources.getInstance();
           gc.drawImage(r.getImage("spriters"),
-    //inicio de la posicion
+            //inicio de la posicion
             1,
             1805,
             WIDTH,
@@ -125,6 +123,19 @@ public class Shotter {
 
 //                    this.getPosicion().getY(), (this.getPosicion().getX() - WIDTH / 2) *Game.SCALE, 
 //                    (this.getPosicion().getY() - HEIGHT / 2) * Game.SCALE);
+        }
+        if (this.actual!=null){
+        gc.drawImage(r.getImage("balls"),
+            //inicio de la posicion
+            this.actual.getBalltype().getX(),
+            this.actual.getBalltype().getY(),
+            Bubble.WIDTH,
+            Bubble.HEIGHT,
+            //dibujar en el lienzo
+            (this.posicion.getX() - Bubble.WIDTH / 2) * Game.SCALE,
+            (this.posicion.getY() - Bubble.HEIGHT / 2) * Game.SCALE,
+            Bubble.WIDTH * Game.SCALE,
+            Bubble.HEIGHT * Game.SCALE);
         }
     }
 
