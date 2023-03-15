@@ -96,6 +96,16 @@ public class BubbleGrid {
             }
             this.bubblegrid[f][c] = b;
             //}
+            Point2D iguales[]= new Point2D[10];
+            taliban(c, f, b.getBalltype(), iguales, 0);
+            int conteo=conteo(iguales);
+            if(conteo>=3){
+                for(int i=0;i<conteo;i++){
+                    int x=(int)(iguales[i].getX());
+                    int y=(int)(iguales[i].getY());
+                    bubblegrid[y][x]=null;
+                }
+            }
         }
         /*}else{
             if (colission && !par){
@@ -112,7 +122,104 @@ public class BubbleGrid {
         }*/
         return colission;
     }
-    public void explosion (Bubble b){
+    public boolean existe (Point2D iguales[], Point2D punto){
+        boolean existe=false;
+        for(int i=0;i<iguales.length;i++){
+                if(iguales[i]==punto){
+                    existe=true;
+                }
+        }
+        return existe;
+    }
+    public void insertar (Point2D iguales[], Point2D punto){
+        for(int i=0;i<iguales.length;i++){
+                if(iguales[i]==null){
+                    iguales[i]=punto;
+                    break;
+                }
+        }
+    }
+    public int conteo(Point2D iguales[]){
+        int contador=0;
+        for(int i=0;i<iguales.length;i++){
+            if(iguales[i]==null){
+                break;
+            }
+            contador++;
+        }
+        return contador;
+    }
+    public void taliban (int c, int f, BubbleType color, Point2D iguales[], int numerollama){
+        if (numerollama>=50){
+            return;
+        }
+        Point2D punto= new Point2D(c, f);
+        boolean estaen =existe(iguales, punto);
         
+        if(bubblegrid[f][c]!=null && bubblegrid[f][c].getBalltype()==color && !estaen){
+            insertar(iguales, punto);
+            //Filas pares.
+            if(f%2==0){
+                //Salir por la izquierda.
+                if(c>0){
+                    taliban(c-1, f, color, iguales, numerollama+1);
+                }
+                //Salir por la derecha.
+                if(c<bubblegrid[0].length-2){
+                    taliban(c+1, f, color, iguales, numerollama+1);
+                }
+                //Salir por arriba.
+                if(f>0){
+                    taliban(c, f-1, color, iguales, numerollama+1);
+                }
+                //Salir por abajo.
+                if(f<bubblegrid.length-2){
+                    taliban(c, f+1, color, iguales, numerollama+1);
+                }
+                //Salir por arriba a la izquierda.
+                if(c>0 && f>0){
+                    taliban(c-1, f-1, color, iguales, numerollama+1);
+                }
+                //Salir por abajo a la izquierda.
+                if(c>0 && f>bubblegrid.length-2){
+                    taliban(c-1, f+1, color, iguales, numerollama+1);
+                }
+                //Filas impares.
+            }else{
+                //Salir por la izquierda.
+                if(c>0){
+                    taliban(c-1, f, color, iguales, numerollama+1);
+                }
+                //Salir por la derecha.
+                if(c<bubblegrid[1].length-2){
+                    taliban(c+1, f, color, iguales, numerollama+1);
+                }
+                //Salir por arriba.
+                if(f>0){
+                    taliban(c, f-1, color, iguales, numerollama+1);
+                }
+                //Salir por abajo.
+                if(f<bubblegrid.length-2){
+                    taliban(c, f+1, color, iguales, numerollama+1);
+                }
+                //Salir por abajo a la derecha.
+                if(c<bubblegrid[1].length-2 && f<bubblegrid.length-2){
+                    taliban(c+1, f+1, color, iguales, numerollama+1);
+                }
+                //Salir por arriba a la derecha.
+                if(c<bubblegrid[1].length-2 && f>0){
+                    taliban(c+1, f-1, color, iguales, numerollama+1);
+                }
+            }
+            System.out.println(c);
+            System.out.println(f);
+        }
+    }
+    public void resetGrid(){
+        for(int i=0;i<bubblegrid.length;i++){
+            for(int j=0;j<bubblegrid[i].length;j++){
+                bubblegrid[i][j]=null;
+            }
+        }
     }
 }

@@ -166,8 +166,30 @@ public class Board implements IKeyListener {
     private Point2D fondoNivel(int nivel){
         Point2D resultado= new Point2D(16,16);
         nivel/=3;
+        nivel%=9;
         if(nivel==1){
             resultado= new Point2D(328+16,16);
+        }
+        if(nivel==2){
+            resultado= new Point2D(328+328+16,16);
+        }
+        if(nivel==3){
+            resultado= new Point2D(16,280);
+        }
+        if(nivel==4){
+            resultado= new Point2D(328+16,280);
+        }
+        if(nivel==5){
+            resultado= new Point2D(328+328+16,280);
+        }
+        if(nivel==6){
+            resultado= new Point2D(16,544);
+        }
+        if(nivel==7){
+            resultado= new Point2D(328+16,544);
+        }
+        if(nivel==8){
+            resultado= new Point2D(328+328+16,544);
         }
         return resultado;
     }
@@ -225,6 +247,7 @@ public class Board implements IKeyListener {
             case ENTER:
                 this.nivel++;
                 this.paintBackground();
+                this.grid.resetGrid();
                 break;
             case SPACE:
                 if (this.ball == null || !this.ball.isPlay()) {
