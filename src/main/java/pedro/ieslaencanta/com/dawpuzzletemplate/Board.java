@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 public class Board implements IKeyListener {
 
     private Rectangle2D game_zone;
-
+    private int nivel=0;
     private GraphicsContext gc;
     private GraphicsContext bggc;
     private Dimension2D original_size;
@@ -163,14 +163,23 @@ public class Board implements IKeyListener {
         this.gc.clearRect(0, 0, this.original_size.getWidth() * Game.SCALE, this.original_size.getHeight() * Game.SCALE);
     }
 
+    private Point2D fondoNivel(int nivel){
+        Point2D resultado= new Point2D(16,16);
+        nivel/=3;
+        if(nivel==1){
+            resultado= new Point2D(328+16,16);
+        }
+        return resultado;
+    }
     /**
      * pintar el fonodo
      */
     public void paintBackground() {
+        Point2D CoordenadaFondo= fondoNivel(nivel);
         Image imagen = Resources.getInstance().getImage("fondos");
         this.bggc.drawImage(imagen,
                 //Se optiene del original
-                16, 16,
+                CoordenadaFondo.getX(), CoordenadaFondo.getY(),
                 this.original_size.getWidth(),
                 this.original_size.getHeight(),
                 0, 0,
@@ -214,7 +223,7 @@ public class Board implements IKeyListener {
                 this.right_press = false;
                 break;
             case ENTER:
-
+                this.nivel++;
                 this.paintBackground();
                 break;
             case SPACE:
