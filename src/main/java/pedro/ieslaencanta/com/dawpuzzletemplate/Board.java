@@ -253,7 +253,7 @@ public class Board implements IKeyListener {
                 if (this.ball == null || !this.ball.isPlay()) {
                     this.ball = shotter.shoot();
                     //se coloca el tipo de forma aleatorioa
-                    this.ball.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
+                    //this.ball.setBalltype(BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
                     //se pone la posición (centro) y ángulo aleatorio
                     this.ball.setPosicion(new Point2D((this.game_zone.getMaxX() - this.game_zone.getWidth() / 2), (this.game_zone.getMaxY() - 18)));
                     //), (float) (Math.random()*360));

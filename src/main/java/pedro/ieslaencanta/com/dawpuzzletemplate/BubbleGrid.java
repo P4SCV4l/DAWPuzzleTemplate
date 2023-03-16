@@ -96,35 +96,25 @@ public class BubbleGrid {
             }
             this.bubblegrid[f][c] = b;
             //}
-            Point2D iguales[]= new Point2D[10];
+            Point2D iguales[]= new Point2D[80];
             taliban(c, f, b.getBalltype(), iguales, 0);
-            int conteo=conteo(iguales);
-            if(conteo>=3){
-                for(int i=0;i<conteo;i++){
+            int contador=conteo(iguales);
+            if(contador>=3){
+                for(int i=0;i<contador;i++){
                     int x=(int)(iguales[i].getX());
                     int y=(int)(iguales[i].getY());
                     bubblegrid[y][x]=null;
                 }
             }
         }
-        /*}else{
-            if (colission && !par){
-                int f, c;
-                b.stop();
-                f = (int) ((b.getPosicion().getY() - this.starty) / Bubble.HEIGHT);
-                c = (int) ((b.getPosicion().getX() - this.startx) / Bubble.WIDTH);
-                this.bubblegrid[f][c] = b;
-                b.setPosicion(new Point2D(
-                        this.startx + c * Bubble.WIDTH + Bubble.WIDTH,
-                        this.starty + f * Bubble.HEIGHT + Bubble.HEIGHT / 2)
-                );
-            }
-        }*/
         return colission;
     }
     public boolean existe (Point2D iguales[], Point2D punto){
         boolean existe=false;
         for(int i=0;i<iguales.length;i++){
+            //Añadir variables para comparar en el if en vez del código actual. Por especificar.
+//            int x = iguales[i].getX();
+//            int y = iguales[i].getY();
                 if(iguales[i]==punto){
                     existe=true;
                 }
@@ -155,64 +145,60 @@ public class BubbleGrid {
         }
         Point2D punto= new Point2D(c, f);
         boolean estaen =existe(iguales, punto);
-        
+        // System.out.println();
+        System.out.println(c);
+        System.out.println(f);
         if(bubblegrid[f][c]!=null && bubblegrid[f][c].getBalltype()==color && !estaen){
             insertar(iguales, punto);
             //Filas pares.
+            //Salir por la izquierda.
+            if(c>0){
+                taliban(c-1, f, color, iguales, numerollama+1);
+            }
             if(f%2==0){
-                //Salir por la izquierda.
-                if(c>0){
-                    taliban(c-1, f, color, iguales, numerollama+1);
-                }
                 //Salir por la derecha.
-                if(c<bubblegrid[0].length-2){
+                if(c+1<bubblegrid[0].length){
                     taliban(c+1, f, color, iguales, numerollama+1);
                 }
                 //Salir por arriba.
-                if(f>0){
+                if(f>0 && c<bubblegrid[0].length-2){
                     taliban(c, f-1, color, iguales, numerollama+1);
-                }
-                //Salir por abajo.
-                if(f<bubblegrid.length-2){
-                    taliban(c, f+1, color, iguales, numerollama+1);
                 }
                 //Salir por arriba a la izquierda.
                 if(c>0 && f>0){
                     taliban(c-1, f-1, color, iguales, numerollama+1);
                 }
+                //Salir por abajo.
+                if(f<bubblegrid.length-1 && c<bubblegrid[1].length){
+                    taliban(c, f+1, color, iguales, numerollama+1);
+                }
                 //Salir por abajo a la izquierda.
-                if(c>0 && f>bubblegrid.length-2){
+                if(c>0 && f>bubblegrid.length-1){
                     taliban(c-1, f+1, color, iguales, numerollama+1);
                 }
                 //Filas impares.
             }else{
-                //Salir por la izquierda.
-                if(c>0){
-                    taliban(c-1, f, color, iguales, numerollama+1);
-                }
                 //Salir por la derecha.
-                if(c<bubblegrid[1].length-2){
+                if(c+1<bubblegrid[1].length){
                     taliban(c+1, f, color, iguales, numerollama+1);
                 }
                 //Salir por arriba.
-                if(f>0){
+                if(f>0 && c<bubblegrid[1].length-1){
                     taliban(c, f-1, color, iguales, numerollama+1);
                 }
                 //Salir por abajo.
-                if(f<bubblegrid.length-2){
+                if(f<bubblegrid.length-1 && c<bubblegrid[1].length){
                     taliban(c, f+1, color, iguales, numerollama+1);
                 }
                 //Salir por abajo a la derecha.
-                if(c<bubblegrid[1].length-2 && f<bubblegrid.length-2){
+                if(c<bubblegrid[1].length-1 && f<bubblegrid.length-1){
                     taliban(c+1, f+1, color, iguales, numerollama+1);
                 }
                 //Salir por arriba a la derecha.
-                if(c<bubblegrid[1].length-2 && f>0){
+                if(c<bubblegrid[1].length-1 && f>0){
                     taliban(c+1, f-1, color, iguales, numerollama+1);
                 }
             }
-            System.out.println(c);
-            System.out.println(f);
         }
     }
     public void resetGrid(){
@@ -222,4 +208,7 @@ public class BubbleGrid {
             }
         }
     }
+    // public void initGrid(){
+        
+    // }
 }

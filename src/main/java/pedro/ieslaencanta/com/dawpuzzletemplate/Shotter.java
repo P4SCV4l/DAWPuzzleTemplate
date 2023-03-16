@@ -124,6 +124,7 @@ public class Shotter {
 //                    this.getPosicion().getY(), (this.getPosicion().getX() - WIDTH / 2) *Game.SCALE, 
 //                    (this.getPosicion().getY() - HEIGHT / 2) * Game.SCALE);
         }
+        //Pintar bola ACTUAL.
         if (this.actual!=null){
         gc.drawImage(r.getImage("balls"),
             //inicio de la posicion
@@ -137,6 +138,20 @@ public class Shotter {
             Bubble.WIDTH * Game.SCALE,
             Bubble.HEIGHT * Game.SCALE);
         }
+        //Pintar bola ACTUAL.
+        if (this.siguiente!=null){
+            gc.drawImage(r.getImage("balls"),
+                //inicio de la posicion
+                this.siguiente.getBalltype().getX(),
+                this.siguiente.getBalltype().getY(),
+                Bubble.WIDTH,
+                Bubble.HEIGHT,
+                //dibujar en el lienzo
+                ((this.posicion.getX() - Bubble.WIDTH / 2) * Game.SCALE)-100,
+                ((this.posicion.getY() - Bubble.HEIGHT / 2) * Game.SCALE)+35,
+                Bubble.WIDTH * Game.SCALE,
+                Bubble.HEIGHT * Game.SCALE);
+            }
     }
 
     public void Moveleft() {
