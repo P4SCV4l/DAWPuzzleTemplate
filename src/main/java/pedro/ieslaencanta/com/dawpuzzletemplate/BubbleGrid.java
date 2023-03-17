@@ -113,8 +113,8 @@ public class BubbleGrid {
         boolean existe=false;
         for(int i=0;i<iguales.length;i++){
             //Añadir variables para comparar en el if en vez del código actual. Por especificar.
-//            int x = iguales[i].getX();
-//            int y = iguales[i].getY();
+//            int x =(int)iguales[i].getX();
+//            int y =(int)iguales[i].getY();
                 if(iguales[i]==punto){
                     existe=true;
                 }
@@ -208,6 +208,23 @@ public class BubbleGrid {
             }
         }
     }
+    public void rellenarGrid(){
+        double variaciónx=8;      
+        for (int j=0; j<8 ;j++){   
+            bubblegrid[0][j]= new Bubble(this.startx+variaciónx, this.starty+Bubble.HEIGHT/2, BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
+            variaciónx+=16;
+        }
+        double variaciónimparesx=16;
+        for (int j=0; j<7 ;j++){   
+            bubblegrid[1][j]= new Bubble(this.startx+variaciónimparesx, this.starty+Bubble.HEIGHT+Bubble.HEIGHT/2, BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
+            variaciónimparesx+=16;
+        }
+        variaciónx=8;
+        for (int j=0; j<8 ;j++){   
+            bubblegrid[2][j]= new Bubble(this.startx+variaciónx, this.starty+Bubble.HEIGHT*2+Bubble.HEIGHT/2, BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
+            variaciónx+=16;
+        }
+}
     // public void initGrid(){
         
     // }

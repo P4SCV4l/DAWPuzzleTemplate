@@ -248,6 +248,7 @@ public class Board implements IKeyListener {
                 this.nivel++;
                 this.paintBackground();
                 this.grid.resetGrid();
+                this.grid.rellenarGrid();
                 break;
             case SPACE:
                 if (this.ball == null || !this.ball.isPlay()) {
