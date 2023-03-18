@@ -132,7 +132,8 @@ public class Board implements IKeyListener {
         }
 
     }
-
+    
+    //Imrpime en pantalla las bolas, el shotter y el grid de bolas.
     private void render() {
         if (this.ball != null && this.ball.getBalltype() != null) {
             this.ball.paint(gc);
@@ -145,6 +146,8 @@ public class Board implements IKeyListener {
         }
     }
 
+    //Este método llamaa los metodos de mover las flechas tanto para la derecha
+    //como para la izquierda.
     private void process_input() {
         if (this.left_press) {
             shotter.Moveleft();
@@ -162,7 +165,8 @@ public class Board implements IKeyListener {
         this.gc.restore();
         this.gc.clearRect(0, 0, this.original_size.getWidth() * Game.SCALE, this.original_size.getHeight() * Game.SCALE);
     }
-
+    
+    //Aquí elegimos el nivel a pintar en el método siguiente. Alternando el fondo cada tres pulsaciones de "ENTER".
     private Point2D fondoNivel(int nivel){
         Point2D resultado= new Point2D(16,16);
         nivel/=3;

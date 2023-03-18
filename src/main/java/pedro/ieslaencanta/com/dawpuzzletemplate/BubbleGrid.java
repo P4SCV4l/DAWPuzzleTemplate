@@ -36,6 +36,7 @@ public class BubbleGrid {
 //        bubblegrid = new Bubble[startx][starty];
 //    }
 
+    //Este método se dedica a mostrar el contenido de todos lo indices del grid que no sean nulos.
     public void paint(GraphicsContext gc) {
         for (int i = 0; i < this.bubblegrid.length; i++) {
             for (int j = 0; j < this.bubblegrid[i].length; j++) {
@@ -46,6 +47,10 @@ public class BubbleGrid {
         }
     }
 
+    //Este método existe para poder saber cuando un bola choca contra el techo y donde ponerla,
+    //detectar las colisiones con otras bolas y donde ubicarlas,
+    //también a diferenciar el posicionamiento de las bolas dependiendo de si la fila es par
+    //o impar y por último poder llamar al método análisis y poder explotar las bolas.
     public boolean collision(Bubble b) {
         boolean colission = false;
         //boolean par = false;
@@ -97,7 +102,7 @@ public class BubbleGrid {
             this.bubblegrid[f][c] = b;
             //}
             Point2D iguales[]= new Point2D[80];
-            taliban(c, f, b.getBalltype(), iguales, 0);
+            analisis(c, f, b.getBalltype(), iguales, 0);
             int contador=conteo(iguales);
             if(contador>=3){
                 for(int i=0;i<contador;i++){
@@ -109,6 +114,8 @@ public class BubbleGrid {
         }
         return colission;
     }
+    //Este método nos permite saber si en el índice indicado del vector existe algún Point2D,
+    //y si existe devolvemos existe=true;
     public boolean existe (Point2D iguales[], Point2D punto){
         boolean existe=false;
         for(int i=0;i<iguales.length;i++){
@@ -121,6 +128,7 @@ public class BubbleGrid {
         }
         return existe;
     }
+    //Este método nos indicará si existe un Point2D en el vector y si no es así que introduzca uno.
     public void insertar (Point2D iguales[], Point2D punto){
         for(int i=0;i<iguales.length;i++){
                 if(iguales[i]==null){
@@ -129,6 +137,8 @@ public class BubbleGrid {
                 }
         }
     }
+    //Este método nos ayuda a seber cual es el numero de índices que acaba poseyendo el vector
+    //que agrupara las bolas.
     public int conteo(Point2D iguales[]){
         int contador=0;
         for(int i=0;i<iguales.length;i++){
@@ -139,7 +149,10 @@ public class BubbleGrid {
         }
         return contador;
     }
-    public void taliban (int c, int f, BubbleType color, Point2D iguales[], int numerollama){
+    //Este método lo que va ha hacer es insertar en el vector de iguales el punto en cuestión,
+    //después lo que hacemos es evaluar la fila y columna donde se encuentra para poder determinar
+    //hacia donde es que podemos analalizar sin salirnos de los límites.
+    public void analisis (int c, int f, BubbleType color, Point2D iguales[], int numerollama){
         if (numerollama>=50){
             return;
         }
@@ -153,54 +166,55 @@ public class BubbleGrid {
             //Filas pares.
             //Salir por la izquierda.
             if(c>0){
-                taliban(c-1, f, color, iguales, numerollama+1);
+                analisis(c-1, f, color, iguales, numerollama+1);
             }
             if(f%2==0){
                 //Salir por la derecha.
                 if(c+1<bubblegrid[0].length){
-                    taliban(c+1, f, color, iguales, numerollama+1);
+                    analisis(c+1, f, color, iguales, numerollama+1);
                 }
                 //Salir por arriba.
                 if(f>0 && c<bubblegrid[0].length-2){
-                    taliban(c, f-1, color, iguales, numerollama+1);
+                    analisis(c, f-1, color, iguales, numerollama+1);
                 }
                 //Salir por arriba a la izquierda.
                 if(c>0 && f>0){
-                    taliban(c-1, f-1, color, iguales, numerollama+1);
+                    analisis(c-1, f-1, color, iguales, numerollama+1);
                 }
                 //Salir por abajo.
                 if(f<bubblegrid.length-1 && c<bubblegrid[1].length){
-                    taliban(c, f+1, color, iguales, numerollama+1);
+                    analisis(c, f+1, color, iguales, numerollama+1);
                 }
                 //Salir por abajo a la izquierda.
                 if(c>0 && f>bubblegrid.length-1){
-                    taliban(c-1, f+1, color, iguales, numerollama+1);
+                    analisis(c-1, f+1, color, iguales, numerollama+1);
                 }
                 //Filas impares.
             }else{
                 //Salir por la derecha.
                 if(c+1<bubblegrid[1].length){
-                    taliban(c+1, f, color, iguales, numerollama+1);
+                    analisis(c+1, f, color, iguales, numerollama+1);
                 }
                 //Salir por arriba.
                 if(f>0 && c<bubblegrid[1].length-1){
-                    taliban(c, f-1, color, iguales, numerollama+1);
+                    analisis(c, f-1, color, iguales, numerollama+1);
                 }
                 //Salir por abajo.
                 if(f<bubblegrid.length-1 && c<bubblegrid[1].length){
-                    taliban(c, f+1, color, iguales, numerollama+1);
+                    analisis(c, f+1, color, iguales, numerollama+1);
                 }
                 //Salir por abajo a la derecha.
                 if(c<bubblegrid[1].length-1 && f<bubblegrid.length-1){
-                    taliban(c+1, f+1, color, iguales, numerollama+1);
+                    analisis(c+1, f+1, color, iguales, numerollama+1);
                 }
                 //Salir por arriba a la derecha.
                 if(c<bubblegrid[1].length-1 && f>0){
-                    taliban(c+1, f-1, color, iguales, numerollama+1);
+                    analisis(c+1, f-1, color, iguales, numerollama+1);
                 }
             }
         }
     }
+    //Este método sirve para vaciar el grid.
     public void resetGrid(){
         for(int i=0;i<bubblegrid.length;i++){
             for(int j=0;j<bubblegrid[i].length;j++){
@@ -208,6 +222,7 @@ public class BubbleGrid {
             }
         }
     }
+    //Este método rellena las tres primeras filas del grid con bolas de color aleatorio.
     public void rellenarGrid(){
         double variaciónx=8;      
         for (int j=0; j<8 ;j++){   
@@ -224,7 +239,7 @@ public class BubbleGrid {
             bubblegrid[2][j]= new Bubble(this.startx+variaciónx, this.starty+Bubble.HEIGHT*2+Bubble.HEIGHT/2, BubbleType.values()[(int) (Math.random() * BubbleType.values().length)]);
             variaciónx+=16;
         }
-}
+    }
     // public void initGrid(){
         
     // }

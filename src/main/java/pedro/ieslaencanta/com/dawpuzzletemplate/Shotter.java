@@ -43,7 +43,8 @@ public class Shotter {
     public Bubble CreateBubble() {
         return new Bubble();
     }
-
+    //Este método shoot lo que hace es ir asignando el valor de a bola actual a la tempo(que será la que dispararemos),
+    //luego la actual pasará a ser la que anteriormente fue la siguiente y la siguiente pasa a crear una nueva bola.
     public Bubble shoot() {
         Bubble tempo = this.actual;
         tempo.setAngulo(angulo);
@@ -51,6 +52,7 @@ public class Shotter {
         this.siguiente = new Bubble();
         return tempo;
     }
+    //Este método getter se dedica a ir eligiendo la flecha que debemos elegir por cada angulo.
     public Point2D getArrowPoint2D() {
         int c;
         int f;
@@ -72,8 +74,9 @@ public class Shotter {
         }
         return new Point2D(c, f);
     }
-
+    //Este método se dedica a imprimir por pantalla todo lo relacionado al shotter.
     public void paint(GraphicsContext gc) {
+        //Aquí se muestra la imagen del disparador.
         Resources r = Resources.getInstance();
           gc.drawImage(r.getImage("spriters"),
             //inicio de la posicion
@@ -86,7 +89,8 @@ public class Shotter {
             (this.posicion.getY() - 40 / 2) * Game.SCALE,
             WIDTH * Game.SCALE,
             40 * Game.SCALE);
-
+        //Aquí lo que mostramos es la flecha correspondiente al ángulo gracias al método que hemos
+        //definido anteriormente "getArrowPoint2D".
         Point2D p = getArrowPoint2D();
         if (this.angulo <= 90) {
             gc.drawImage(r.getImage("spriters"),
@@ -99,7 +103,6 @@ public class Shotter {
                     WIDTH * Game.SCALE,
                     HEIGHT * Game.SCALE);
         }
-
         if (this.angulo > 90) {
             gc.drawImage(r.getImage("spriters"),
                     1 + (p.getX() * 65),
@@ -124,7 +127,7 @@ public class Shotter {
 //                    this.getPosicion().getY(), (this.getPosicion().getX() - WIDTH / 2) *Game.SCALE, 
 //                    (this.getPosicion().getY() - HEIGHT / 2) * Game.SCALE);
         }
-        //Pintar bola ACTUAL.
+        //Aquí conseguimos mostrar la bola actual por pantalla.
         if (this.actual!=null){
         gc.drawImage(r.getImage("balls"),
             //inicio de la posicion
@@ -138,7 +141,7 @@ public class Shotter {
             Bubble.WIDTH * Game.SCALE,
             Bubble.HEIGHT * Game.SCALE);
         }
-        //Pintar bola ACTUAL.
+        //Y aquí mostramos la siguiente.
         if (this.siguiente!=null){
             gc.drawImage(r.getImage("balls"),
                 //inicio de la posicion
@@ -153,14 +156,14 @@ public class Shotter {
                 Bubble.HEIGHT * Game.SCALE);
             }
     }
-
+    //Este método será llamado por la tecla LEFT para poder mover la flecha hacia la izquierda.
     public void Moveleft() {
         this.angulo += this.incremento;
         if (this.angulo > MAX_ANGLE) {
             this.angulo = MAX_ANGLE;
         }
     }
-
+    //Este otro método será llamado por la tecla RIGHT para poder mover la flecha hacia la derecha.
     public void Moverigth() {
         this.angulo -= this.incremento;
         if (this.angulo < MIN_ANGLE) {
