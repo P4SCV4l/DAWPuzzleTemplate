@@ -198,7 +198,7 @@ public class Board implements IKeyListener {
         return resultado;
     }
     /**
-     * pintar el fonodo
+     * pintar el fondo
      */
     public void paintBackground() {
         Point2D CoordenadaFondo= fondoNivel(nivel);

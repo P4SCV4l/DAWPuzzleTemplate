@@ -114,18 +114,19 @@ public class BubbleGrid {
         }
         return colission;
     }
-    //Este método nos permite saber si en el índice indicado del vector existe algún Point2D,
-    //y si existe devolvemos existe=true;
+    //Este método nos permite saber si en algun índice del vector ya existe o está el punto de la bola que queremos comparar.
     public boolean existe (Point2D iguales[], Point2D punto){
         boolean existe=false;
         for(int i=0;i<iguales.length;i++){
-            //Añadir variables para comparar en el if en vez del código actual. Por especificar.
-//            int x =(int)iguales[i].getX();
-//            int y =(int)iguales[i].getY();
-                if(iguales[i]==punto){
+            if(iguales[i]!=null){
+                int x =(int)punto.getX();
+                int y =(int)punto.getY();
+                if(iguales[i].getX()==x && iguales[i].getY()== y){
                     existe=true;
                 }
+            }
         }
+        
         return existe;
     }
     //Este método nos indicará si existe un Point2D en el vector y si no es así que introduzca uno.
@@ -137,7 +138,7 @@ public class BubbleGrid {
                 }
         }
     }
-    //Este método nos ayuda a seber cual es el numero de índices que acaba poseyendo el vector
+    //Este método nos ayuda a saber cuál es el numero de índices que acaba poseyendo el vector
     //que agrupara las bolas.
     public int conteo(Point2D iguales[]){
         int contador=0;
@@ -149,18 +150,15 @@ public class BubbleGrid {
         }
         return contador;
     }
-    //Este método lo que va ha hacer es insertar en el vector de iguales el punto en cuestión,
+    //Este método lo que va ha hacer es comprobar en el vector de iguales el punto en cuestión,
     //después lo que hacemos es evaluar la fila y columna donde se encuentra para poder determinar
-    //hacia donde es que podemos analalizar sin salirnos de los límites.
+    //hacia donde es que podemos analizar sin salirnos de los límites.
     public void analisis (int c, int f, BubbleType color, Point2D iguales[], int numerollama){
         if (numerollama>=50){
             return;
         }
         Point2D punto= new Point2D(c, f);
         boolean estaen =existe(iguales, punto);
-        // System.out.println();
-        System.out.println(c);
-        System.out.println(f);
         if(bubblegrid[f][c]!=null && bubblegrid[f][c].getBalltype()==color && !estaen){
             insertar(iguales, punto);
             //Filas pares.
@@ -240,7 +238,7 @@ public class BubbleGrid {
             variaciónx+=16;
         }
     }
-    // public void initGrid(){
+    // public void initGrid(Level nivel){
         
     // }
 }
